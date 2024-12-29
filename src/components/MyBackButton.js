@@ -2,6 +2,7 @@ import {Pressable, StyleSheet} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import BackIcon from '../assets/BackIcon';
+import colors from './colors';
 
 const MyBackButton = () => {
   // hooks
@@ -17,7 +18,7 @@ export default MyBackButton;
 
 const styles = StyleSheet.create({
   box: {
-    backgroundColor: 'lightcoral',
+    backgroundColor: colors.borderColor,
     width: 45,
     height: 45,
     borderRadius: 25,

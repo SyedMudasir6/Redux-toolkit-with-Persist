@@ -6,23 +6,26 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import MyButton from '../components/MyButton';
 import MyBackButton from '../components/MyBackButton';
-import {useDispatch, useSelector} from 'react-redux';
-import {addToCart, removeFromCart} from '../redux/features/CartSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart, removeFromCart } from '../redux/features/CartSlice';
+import colors from '../components/colors';
+import fontfamily from '../constants/fontfamily';
+import CustomHeader from '../components/CustomHeader';
 
 const SingleProduct = () => {
   // states
   const [currentItem, setCurrentItem] = useState({});
   // hooks
   const {
-    params: {Product},
+    params: { Product },
   } = useRoute();
-  const {navigate} = useNavigation();
+  const { navigate } = useNavigation();
   const dispatch = useDispatch();
-  const {cartData, totalAmount} = useSelector(state => state.cartItems);
+  const { cartData, totalAmount } = useSelector(state => state.cartItems);
   console.log(
     '🚀 ~ file: SingleProduct.js:23 ~ SingleProduct ~ cartData, totalAmount:',
     cartData,
@@ -44,11 +47,11 @@ const SingleProduct = () => {
 
   return (
     <View style={styles.container}>
-      <SafeAreaView />
-      <MyBackButton />
+      <CustomHeader back title={Product.title} />
+
       {/* Card */}
       <View style={styles.cardBox}>
-        <Image source={{uri: Product.thumbnail}} style={styles.img} />
+        <Image source={{ uri: Product.thumbnail }} style={styles.img} />
         <View style={styles.textBox}>
           <Text style={styles.title}>{Product.title}</Text>
           <Text style={styles.price}>${Product.price}</Text>
@@ -80,7 +83,7 @@ const SingleProduct = () => {
                 <Text style={styles.btn}>-</Text>
               </Pressable>
               <Pressable>
-                <Text style={styles.btn}>{currentItem.quantity}</Text>
+                <Text style={[styles.btn, { color: colors.borderColor }]}>{currentItem.quantity}</Text>
               </Pressable>
               <Pressable
                 style={styles.btnBox}
@@ -106,23 +109,28 @@ export default SingleProduct;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: '5%',
+    backgroundColor: colors.backColor
   },
   img: {
     width: '100%',
     height: 200,
-    resizeMode: 'cover',
+    resizeMode: 'contain',
     borderRadius: 20,
   },
   title: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: fontfamily.Bold,
+    color: colors.title
   },
   price: {
     fontSize: 18,
+    fontFamily: fontfamily.Bold,
+    color: colors.price
   },
   cardBox: {
     marginBottom: 30,
+    padding: '2%',
+
   },
   textBox: {
     flexDirection: 'row',
@@ -135,7 +143,8 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: fontfamily.Medium,
+    color: colors.title
   },
   value: {
     fontSize: 16,
@@ -143,7 +152,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     marginTop: 50,
-    gap: 10,
+    gap: 5,
   },
   twoBtn: {
     columnGap: 20,
@@ -155,12 +164,14 @@ const styles = StyleSheet.create({
   btnBox: {
     width: 40,
     height: 40,
-    backgroundColor: 'lightgrey',
+    backgroundColor: colors.borderColor,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 25,
   },
   btn: {
     fontSize: 30,
+    color: colors.backColor,
+    fontFamily: fontfamily.Medium
   },
 });

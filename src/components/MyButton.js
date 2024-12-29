@@ -1,9 +1,11 @@
 import {ActivityIndicator, Pressable, StyleSheet, Text} from 'react-native';
 import React from 'react';
+import colors from './colors';
+import fontfamily from '../constants/fontfamily';
 
-const MyButton = ({title, onPress, isLoading}) => {
+const MyButton = ({title, onPress, isLoading,styleBg}) => {
   return (
-    <Pressable onPress={onPress} style={styles.container}>
+    <Pressable onPress={onPress} style={[styles.container,{styleBg}]}>
       <Text style={styles.title}>{title}</Text>
       {isLoading && <ActivityIndicator size="small" color={'white'} />}
     </Pressable>
@@ -14,10 +16,10 @@ export default MyButton;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'lightcoral',
-    borderRadius: 25,
+    backgroundColor: colors.borderColor,
+    borderRadius: 7,
     width: '100%',
-    height: 45,
+    height: 50,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
@@ -26,5 +28,6 @@ const styles = StyleSheet.create({
   title: {
     color: 'white',
     fontSize: 18,
+    fontFamily:fontfamily.Medium
   },
 });

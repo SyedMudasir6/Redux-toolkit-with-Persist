@@ -1,26 +1,26 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from '../screens/Login';
-import {NavigationContainer} from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import TabNavigation from './TabNavigation';
 import CounterScreen from '../screens/CounterScreen';
 import CartScreen from '../screens/CartScreen';
 import SingleProduct from '../screens/SingleProduct';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
+import SplashScreen from '../components/SplashScreen';
 
 const Stack = createNativeStackNavigator();
 
 const AppNavigation = () => {
-  // const userData = false;
-  const {userData} = useSelector(state => state.auth);
+  const { userData } = useSelector(state => state.auth);
   console.log(
     '🚀 ~ file: AppNavigation.js:17 ~ AppNavigation ~ userData:',
     userData,
   );
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Navigator initialRouteName='splashScreen' screenOptions={{ headerShown: false, }}>
         {userData ? (
           <Stack.Group>
             <Stack.Screen name="root" component={TabNavigation} />
@@ -30,7 +30,7 @@ const AppNavigation = () => {
         ) : (
           <Stack.Group>
             <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="CounterScreen" component={CounterScreen} />
+            <Stack.Screen name="splashScreen" component={SplashScreen} />
           </Stack.Group>
         )}
       </Stack.Navigator>

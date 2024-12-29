@@ -21,10 +21,6 @@ export const login = createAsyncThunk('login', async (params, thunkApi) => {
   }
 });
 
-// signup
-
-// confirmSignup
-
 const AuthSlice = createSlice({
   name: 'authSlice',
   initialState,
@@ -44,6 +40,14 @@ const AuthSlice = createSlice({
       state.isError = true;
     });
   },
+  reducers: {
+    // Add logout reducer
+    logout: (state) => {
+      state.userData = null;
+      state.isSuccess = false;
+      state.isError = false;
+    }
+  },
 });
-
+export const { logout } = AuthSlice.actions;
 export default AuthSlice.reducer;

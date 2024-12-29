@@ -9,45 +9,49 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import MyBackButton from '../components/MyBackButton';
 import MyButton from '../components/MyButton';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   addToCart,
   clearCart,
   removeFromCart,
 } from '../redux/features/CartSlice';
+import fontfamily from '../constants/fontfamily';
+import colors from '../components/colors';
+import CustomHeader from '../components/CustomHeader';
 
 const CartScreen = () => {
   // hooks
   const dispatch = useDispatch();
-  const {navigate} = useNavigation();
-  const {cartData, totalAmount} = useSelector(state => state.cartItems);
+  const { navigate } = useNavigation();
+  const { cartData, totalAmount } = useSelector(state => state.cartItems);
 
   // functions
   const handleCheckout = () => {
     dispatch(clearCart());
     Alert.alert('Order Success', 'Your order place successfully', [
-      {text: 'OK', onPress: () => navigate('Home')},
+      { text: 'OK', onPress: () => navigate('Home') },
     ]);
   };
 
   return (
     <View style={styles.mainContainer}>
       <SafeAreaView />
+      <CustomHeader back title={'Cart'} />
       <View style={styles.container}>
-        <MyBackButton />
+        {/* <MyBackButton /> */}
         <FlatList
           data={cartData}
           style={styles.flatlistStyle}
-          renderItem={({item, index}) => {
+          renderItem={({ item, index }) => {
             return (
               <View style={styles.cardBox} key={item.id}>
                 <View style={styles.innerContainer}>
-                  <Image source={{uri: item.thumbnail}} style={styles.img} />
+                  <Image source={{ uri: item.thumbnail }} style={styles.img} />
                   <View>
-                    <Text style={styles.title}>{item.title}</Text>
+                    <Text numberOfLines={1} style={styles.title}>{item.title}</Text>
                     <Text style={styles.price}>${item.price}</Text>
                   </View>
                 </View>
@@ -88,10 +92,12 @@ export default CartScreen;
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
+    backgroundColor: colors.backColor
   },
   container: {
     flex: 1,
     paddingHorizontal: '5%',
+    marginTop: 15
   },
   flatlistStyle: {
     flex: 1,
@@ -103,30 +109,34 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   title: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: 11,
     marginTop: 10,
+    fontFamily: fontfamily.Bold,
+    color: colors.title
   },
   price: {
     fontSize: 16,
     marginTop: 10,
+    fontFamily: fontfamily.Bold,
+    color: colors.price
   },
   cardBox: {
     marginBottom: 30,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: 'white',
+    backgroundColor: colors.backColor,
     paddingRight: 10,
-    borderRadius: 10,
+    borderRadius: 7,
+    borderWidth: 1,
+    borderColor: colors.borderColor,
     shadowColor: '#000',
     shadowOffset: {
-      width: 0,
+      width: 2,
       height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-
-    elevation: 5,
+    elevation: 10,
   },
   innerContainer: {
     flexDirection: 'row',
@@ -141,18 +151,23 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   btnBox: {
-    width: 40,
-    height: 40,
-    backgroundColor: 'lightgrey',
+    width: 35,
+    height: 35,
+    backgroundColor: colors.borderColor,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 25,
   },
   btn: {
-    fontSize: 25,
+    fontSize: 23,
+    fontFamily: fontfamily.SemiBold,
+    color: colors.backColor
+
   },
   amount: {
     fontSize: 16,
+    fontFamily: fontfamily.SemiBold,
+    color: colors.borderColor
   },
   bottom: {
     flex: 0.2,
@@ -176,9 +191,12 @@ const styles = StyleSheet.create({
   },
   totalAmount: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: fontfamily.SemiBold,
+    color: colors.price
   },
   totalAmountPrice: {
     fontSize: 22,
+    fontFamily: fontfamily.SemiBold,
+    color: colors.price
   },
 });
